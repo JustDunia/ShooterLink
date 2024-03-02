@@ -15,7 +15,7 @@ export default defineConfig(({ command, mode }) => {
                     secure: false
                 }
             },
-            host: "0.0.0.0",
+            host: env.HOST,
             port: env.PORT
         },
     }
