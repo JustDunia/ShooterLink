@@ -1,4 +1,4 @@
-@ShooterLink.Server_HostAddress = http://localhost:5257
+@ShooterLink.Server_HostAddress = http://localhost:5164
 
 GET {{ShooterLink.Server_HostAddress}}/weatherforecast/
 Accept: application/json

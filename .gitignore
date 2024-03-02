@@ -1,5 +1,7 @@
 ## Web project files
 
+.env 
+
 # Logs
 logs
 *.log
