@@ -1,22 +1,15 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import plugin from '@vitejs/plugin-react';
 
 
-export default defineConfig(({ command, mode }) => {
-
-    const env = loadEnv(mode, process.cwd(), '')
-
-    return {
-        plugins: [plugin()],
-        server: {
-            proxy: {
-                '^/weatherforecast': {
-                    target: env.TARGET_URL,
-                    secure: false
-                }
-            },
-            host: env.HOST,
-            port: env.PORT
-        },
+export default defineConfig({
+    plugins: [plugin()],
+    server: {
+        proxy: {
+            '^/api': {
+                target: 'https://localhost:7260',
+                secure: false
+            }
+        }
     }
 })
