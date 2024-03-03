@@ -3,17 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <SpaRoot>..\ShooterLink.Web</SpaRoot>
-    <SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
+    <ImplicitUsings>enable</ImplicitUsings> 
   </PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
 		<SpaProxyServerUrl>https://localhost:5173</SpaProxyServerUrl>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<SpaProxyServerUrl>http://shooterlinkweb.railway.internal:'$(PORT)'</SpaProxyServerUrl>
+		<SpaRoot>..\ShooterLink.Web</SpaRoot>
+		<SpaProxyLaunchCommand>npm run dev</SpaProxyLaunchCommand>
 	</PropertyGroup>
 
   <ItemGroup>

@@ -40,7 +40,7 @@ function App() {
     );
     
     async function populateWeatherData() {
-        const response = await fetch('http://shooterlink.railway.internal:3000/weatherforecast');
+        const response = await fetch('weatherforecast');
         const data = await response.json();
         setForecasts(data);
     }
