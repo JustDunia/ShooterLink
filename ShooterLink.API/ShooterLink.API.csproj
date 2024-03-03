@@ -13,7 +13,7 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-		<SpaProxyServerUrl>http://shooterlinkweb.railway.internal:5994</SpaProxyServerUrl>
+		<SpaProxyServerUrl>http://shooterlinkweb.railway.internal:'$(PORT)'</SpaProxyServerUrl>
 	</PropertyGroup>
 
   <ItemGroup>
