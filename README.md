@@ -21,6 +21,12 @@ together.<br>
 
 1. Clone repository
 2. Go to ShooterLink.Web folder
-3. Install dependencies (npm i)
-4. Go to ShooterLink.API folder
-5. Run application (dotnet run)
+3. Install dependencies <br>`npm i`
+4. Go to ShooterLink.API/Source folder
+5. Run application <br>`dotnet run`
+
+<br><br>
+
+### Attributions
+
+[Target icons created by Freepik - Flaticon]("https://www.flaticon.com/free-icons/target")

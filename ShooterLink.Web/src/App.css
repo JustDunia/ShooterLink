@@ -1,19 +1,25 @@
 ﻿#root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 2rem;
-    text-align: center;
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 2rem;
+	text-align: center;
 }
 
 tr:nth-child(even) {
-    background: #F2F2F2;
+	background: #f2f2f2;
 }
 
 tr:nth-child(odd) {
-    background: #FFF;
+	background: #fff;
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+th,
+td {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+h1 {
+	letter-spacing: 2px;
+	color: #b040ff;
 }
