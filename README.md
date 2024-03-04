@@ -15,10 +15,10 @@ clubs. It is meant to be a hub between athletes, trainers and club administratio
 ## Features
 
 :clipboard: - planned <br> :construction: - working on it <br> :heavy_check_mark: - done <br> <br>
-:clipboard: Athlete profile :clipboard: Personal and club records :clipboard: Traning tracker and
-planner :clipboard: Events calendar :clipboard: Competition organization :clipboard: Notification
-panel :clipboard: Communication panel :clipboard: Shooting range availability :clipboard: Trainings
-calendar
+:clipboard: Athlete profile <br> :clipboard: Personal and club records <br> :clipboard: Traning tracker and
+planner <br> :clipboard: Events calendar <br> :clipboard: Competition organization <br> :clipboard: Notification
+panel <br> :clipboard: Communication panel <br> :clipboard: Shooting range availability <br> :clipboard: Trainings
+calendar <br>
 
 ## How to run
 
