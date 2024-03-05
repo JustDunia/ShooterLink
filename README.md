@@ -9,8 +9,12 @@ clubs. It is meant to be a hub between athletes, trainers and club administratio
 
 ## Tech stack
 
-[![Backend stack](https://img.shields.io/badge/Backend-ASP.NET-<COLOR>.svg)](https://shields.io/)
-[![Frontend stack](https://img.shields.io/badge/Frontend-React-<COLOR>.svg)](https://shields.io/)
+![image](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+![image](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
+![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![image](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![image](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![image](https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white)
 
 ## Features
 
@@ -20,13 +24,19 @@ planner <br> :clipboard: Events calendar <br> :clipboard: Competition organizati
 panel <br> :clipboard: Communication panel <br> :clipboard: Shooting range availability <br> :clipboard: Trainings
 calendar <br>
 
+## Prerequisites
+![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
+![image](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![image](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
+
 ## How to run
 
 1. Clone repository
-2. Go to ShooterLink.Web folder
-3. Install dependencies <br>`npm i`
-4. Go to ShooterLink.API/Source folder
-5. Run application <br>`dotnet run`
+2. Add your database settings to appsettings.json (you don't have to create a database, just provide a name you want it to have)
+3. Go to ShooterLink.Web folder
+4. Install dependencies <br>`npm i`
+5. Go to ShooterLink.API/Source folder
+6. Run application <br>`dotnet run`
 
 <br><br>
 

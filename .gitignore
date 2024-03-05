@@ -32,7 +32,6 @@ dist-ssr
 
 # appsettings
 appsettings.Development.json
-appsettings.json
 .vs/*
 
 # User-specific files
