@@ -1,8 +1,11 @@
 using ShooterLink.API.Configuration;
+using ShooterLink.API.Data.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.BindOptions();
+
+builder.Services.ConfigureServices();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -21,5 +24,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapFallbackToFile("/index.html");
+
+DatabaseInitializer.Initialize(app);
 
 app.Run();

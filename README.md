@@ -19,12 +19,13 @@ clubs. It is meant to be a hub between athletes, trainers and club administratio
 ## Features
 
 :clipboard: - planned <br> :construction: - working on it <br> :heavy_check_mark: - done <br> <br>
-:clipboard: Athlete profile <br> :clipboard: Personal and club records <br> :clipboard: Traning tracker and
-planner <br> :clipboard: Events calendar <br> :clipboard: Competition organization <br> :clipboard: Notification
-panel <br> :clipboard: Communication panel <br> :clipboard: Shooting range availability <br> :clipboard: Trainings
-calendar <br>
+:clipboard: Athlete profile <br> :clipboard: Personal and club records <br> :clipboard: Traning
+tracker and planner <br> :clipboard: Events calendar <br> :clipboard: Competition organization <br>
+:clipboard: Notification panel <br> :clipboard: Communication panel <br> :clipboard: Shooting range
+availability <br> :clipboard: Trainings calendar <br>
 
 ## Prerequisites
+
 ![image](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 ![image](https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![image](https://img.shields.io/badge/.NET-512BD4?style=for-the-badge&logo=dotnet&logoColor=white)
@@ -32,7 +33,7 @@ calendar <br>
 ## How to run
 
 1. Clone repository
-2. Add your database settings to appsettings.json (you don't have to create a database, just provide a name you want it to have)
+2. Add your database settings to appsettings.json (create an empty database first)
 3. Go to ShooterLink.Web folder
 4. Install dependencies <br>`npm i`
 5. Go to ShooterLink.API/Source folder
