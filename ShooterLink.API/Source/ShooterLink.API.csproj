@@ -14,6 +14,8 @@
 
     <ItemGroup>
         <PackageReference Include="Dapper" Version="2.1.28" />
+        <PackageReference Include="FastEndpoints" Version="5.23.0.3-beta"/>
+        <PackageReference Include="FastEndpoints.Security" Version="5.23.0.3-beta"/>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2" />
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy">
             <Version>8.*-*</Version>

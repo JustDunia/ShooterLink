@@ -1,16 +1,19 @@
+using FastEndpoints;
 using ShooterLink.API.Configuration;
 using ShooterLink.API.Data.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.BindOptions();
+builder.ConfigureEndpoints();
 
 builder.Services.ConfigureServices();
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
+
+app.UseAuthentication()
+    .UseAuthorization()
+    .UseFastEndpoints();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

@@ -11,8 +11,8 @@ public static class OptionsConfiguration
     {
         builder.Services.AddOptions<DatabaseOptions>()
             .Bind(builder.Configuration.GetSection(nameof(DatabaseOptions)));
-        
-        builder.Services.AddOptions<SecurityOptions>()
-            .Bind(builder.Configuration.GetSection(nameof(SecurityOptions)));
+
+        builder.Services.AddOptions<KeysOptions>()
+            .Bind(builder.Configuration.GetSection(nameof(KeysOptions)));
     }
 }
