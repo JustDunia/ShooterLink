@@ -19,7 +19,18 @@ public static class DatabaseConfiguration
     {
         using var scope = app.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<DataContext>();
-        context.Database.EnsureCreated();
+
+        var dbExists = context.Database.CanConnect();
+        if (dbExists)
+        {
+            context.Database.Migrate();
+        }
+        else
+        {
+            context.Database.Migrate();
+            var seeder = new InitialDataSeeder(app);
+            seeder.SeedInitialData();
+        }
 
         return app;
     }

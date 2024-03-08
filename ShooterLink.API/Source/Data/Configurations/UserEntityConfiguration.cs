@@ -11,16 +11,24 @@ public class UserEntityConfiguration : EntityConfiguration<User>
     {
         base.Configure(builder);
 
+        builder.Property(e => e.PasswordHash)
+            .IsRequired()
+            .HasMaxLength(500);
+
         builder.Property(e => e.FirstName)
+            .IsRequired()
             .HasMaxLength(255);
 
         builder.Property(e => e.LastName)
+            .IsRequired()
             .HasMaxLength(255);
 
         builder.Property(e => e.Email)
+            .IsRequired()
             .HasMaxLength(255);
 
         builder.Property(e => e.NormalizedEmail)
+            .IsRequired()
             .HasMaxLength(255);
 
         builder.Property(e => e.NickName)
@@ -30,13 +38,22 @@ public class UserEntityConfiguration : EntityConfiguration<User>
             .HasMaxLength(20);
 
         builder.Property(e => e.Token)
-            .HasMaxLength(255);
+            .HasMaxLength(500);
 
-        builder.Property(e => e.Crated)
+        builder.Property(e => e.Created)
+            .IsRequired()
             .HasColumnType("Timestamp")
             .HasDefaultValue(DateTime.Now);
 
         builder.HasMany(e => e.Roles)
             .WithMany(e => e.Users);
+
+        builder.HasMany(e => e.CreatedSettings)
+            .WithOne(e => e.Creator)
+            .HasForeignKey(e => e.CreatorId);
+
+        builder.HasMany(e => e.ModifiedSettings)
+            .WithOne(e => e.Modifier)
+            .HasForeignKey(e => e.ModifierId);
     }
 }
