@@ -5,12 +5,11 @@ namespace ShooterLink.API.Configuration;
 
 public static class ServicesConfiguration
 {
-    public static IServiceCollection ConfigureServices(this IServiceCollection services)
+    public static WebApplicationBuilder ConfigureServices(this WebApplicationBuilder builder)
     {
         // Auth
-        services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
+        builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 
-
-        return services;
+        return builder;
     }
 }

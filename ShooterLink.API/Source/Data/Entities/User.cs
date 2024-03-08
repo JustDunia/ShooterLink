@@ -16,5 +16,6 @@ public sealed class User : Entity
     public bool Verified { get; set; }
     public string? Token { get; set; }
     public DateTime Crated { get; set; }
+
     public ICollection<Role> Roles { get; set; } = [];
 }
