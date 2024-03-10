@@ -1,10 +1,24 @@
 import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import Login from './Components/Login/Login'
+import { CssBaseline } from '@mui/material'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+
+const darkTheme = createTheme({
+	palette: {
+		mode: 'dark',
+	},
+})
 
 function App() {
 	return (
 		<div>
-			<img src='/target-icon.png' alt='application logo' width='200' height='200'></img>
-			<h1>ShooterLink</h1>
+			<ThemeProvider theme={darkTheme}>
+				<CssBaseline />
+				<Routes>
+					<Route path='/login' element={<Login />} />
+				</Routes>
+			</ThemeProvider>
 		</div>
 	)
 }
