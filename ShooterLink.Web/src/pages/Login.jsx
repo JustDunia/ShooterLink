@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import axios from 'axios'
+import { Link as RouterLink } from 'react-router-dom'
 
 export default function Login() {
 	const handleSubmit = async event => {
@@ -35,11 +36,10 @@ export default function Login() {
 					<LockOutlinedIcon />
 				</Avatar>
 				<Typography component='h1' variant='h5'>
-					Logowanie
+					Sign In
 				</Typography>
 				<Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
 					<TextField
-						type='email'
 						margin='normal'
 						required
 						fullWidth
@@ -64,17 +64,17 @@ export default function Login() {
 						label='Zapamiętaj'
 					/> */}
 					<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-						Zaloguj
+						Sign In
 					</Button>
-					<Grid container>
+					<Grid container sx={{ textAlign: 'center' }}>
 						<Grid item xs={12} sm={6}>
 							<Link href='#' variant='body2'>
-								Nie pamiętam hasła
+								Forgot password
 							</Link>
 						</Grid>
 						<Grid item xs={12} sm={6}>
-							<Link href='#' variant='body2'>
-								Zarejestruj się
+							<Link component={RouterLink} to='/register' variant='body2'>
+								Create account
 							</Link>
 						</Grid>
 					</Grid>
