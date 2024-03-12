@@ -5,6 +5,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import Register from './pages/Register'
 import Home from './pages/Home'
 import { darkTheme } from './layout/theme'
+import SharedLayout from './components/SharedLayout'
 
 export default function App() {
 	return (
@@ -12,7 +13,9 @@ export default function App() {
 			<ThemeProvider theme={darkTheme}>
 				<CssBaseline />
 				<Routes>
-					<Route path='/' element={<Home />} />
+					<Route path='/' element={<SharedLayout />}>
+						<Route index element={<Home />} />
+					</Route>
 					<Route path='/login' element={<Login />} />
 					<Route path='/register' element={<Register />} />
 				</Routes>
