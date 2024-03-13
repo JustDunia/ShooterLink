@@ -9,7 +9,7 @@ import SharedLayout from './components/SharedLayout'
 
 export default function App() {
 	return (
-		<Container>
+		<>
 			<ThemeProvider theme={darkTheme}>
 				<CssBaseline />
 				<Routes>
@@ -20,6 +20,6 @@ export default function App() {
 					<Route path='/register' element={<Register />} />
 				</Routes>
 			</ThemeProvider>
-		</Container>
+		</>
 	)
 }
