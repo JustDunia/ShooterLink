@@ -1,4 +1,4 @@
-﻿namespace ShooterLink.API.Auth.Login;
+﻿namespace ShooterLink.API.Features.Auth.Login;
 
 public record LoginResponse(
     string FirstName,

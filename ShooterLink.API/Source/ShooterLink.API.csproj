@@ -43,6 +43,7 @@
 
     <ItemGroup>
         <Folder Include="Data\Migrations\"/>
+        <Folder Include="Features\"/>
         <Folder Include="wwwroot\" />
     </ItemGroup>
 
