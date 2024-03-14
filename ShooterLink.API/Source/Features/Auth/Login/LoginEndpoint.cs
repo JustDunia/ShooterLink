@@ -1,15 +1,12 @@
 ﻿using FastEndpoints;
-using FastEndpoints.Security;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using ShooterLink.API.Configuration;
 using ShooterLink.API.Data.Entities;
 
 namespace ShooterLink.API.Features.Auth.Login;
 
 public class LoginEndpoint(
-    IOptions<KeysOptions> options,
+    ITokenCreator tokenCreator,
     IAuthService service,
     IPasswordHasher<User> passwordHasher)
     : Endpoint<LoginRequest,
@@ -43,15 +40,7 @@ public class LoginEndpoint(
 
         var userRoles = user.Roles.Select(e => e.Name).ToList();
 
-        var jwtToken = JwtBearer.CreateToken(
-            o =>
-            {
-                o.SigningKey = options.Value.SigningKey;
-                o.ExpireAt = DateTime.UtcNow.AddDays(1);
-                o.User.Roles.Add([..userRoles]);
-                o.User.Claims.Add(("UserName", req.Email));
-                o.User["UserId"] = user.Id.ToString();
-            });
+        var jwtToken = tokenCreator.CreateToken(req.Email, user.Id.ToString(), userRoles);
 
         return TypedResults.Ok(new LoginResponse(
             FirstName: "Your",
