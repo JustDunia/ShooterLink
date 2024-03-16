@@ -4,6 +4,8 @@ using FluentValidation;
 namespace ShooterLink.API.Auth.Register;
 
 public record RegisterRequest(
+    string FirstName,
+    string LastName,
     string Email,
     string Password);
 
@@ -11,6 +13,12 @@ public class RegisterRequestValidator : Validator<RegisterRequest>
 {
     public RegisterRequestValidator()
     {
+        RuleFor(r => r.FirstName)
+            .NotEmpty();
+
+        RuleFor(r => r.LastName)
+            .NotEmpty();
+
         RuleFor(r => r.Email)
             .NotEmpty()
             .EmailAddress()

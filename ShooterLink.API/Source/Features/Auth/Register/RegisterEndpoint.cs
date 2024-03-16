@@ -1,11 +1,18 @@
 ﻿using FastEndpoints;
-using FastEndpoints.Security;
-using Microsoft.Extensions.Options;
-using ShooterLink.API.Configuration;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Identity;
+using ShooterLink.API.Data.Entities;
+using ShooterLink.API.Features.Auth;
 
 namespace ShooterLink.API.Auth.Register;
 
-public class RegisterEndpoint(IOptions<KeysOptions> options) : Endpoint<RegisterRequest, RegisterResponse>
+public class RegisterEndpoint(
+    ITokenCreator tokenCreator,
+    IAuthService service,
+    IPasswordHasher<User> passwordHasher)
+    : Endpoint<RegisterRequest,
+        Results<Created,
+            ProblemDetails>>
 {
     public override void Configure()
     {
@@ -13,17 +20,39 @@ public class RegisterEndpoint(IOptions<KeysOptions> options) : Endpoint<Register
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(RegisterRequest req, CancellationToken ct)
+    public override async Task<Results<Created, ProblemDetails>> ExecuteAsync(RegisterRequest req,
+        CancellationToken ct)
     {
-        var jwtToken = JwtBearer.CreateToken(
-            o =>
-            {
-                o.SigningKey = options.Value.SigningKey;
-                o.ExpireAt = DateTime.UtcNow.AddDays(1);
-                o.User.Claims.Add(("UserName", req.Email));
-                o.User["UserId"] = "001"; //indexer based claim setting
-            });
+        var user = await service.GetUserByEmail(req.Email);
 
-        await SendAsync(new(req.Email, jwtToken));
+        if (user is not null)
+        {
+            AddError("User with this email address already exists");
+            return new ProblemDetails(ValidationFailures);
+        }
+
+        user = new User()
+        {
+            FirstName = req.FirstName,
+            LastName = req.LastName,
+            Email = req.Email,
+            NormalizedEmail = req.Email.ToUpper(),
+            Created = DateTime.Now
+        };
+
+        var passwordHash = passwordHasher.HashPassword(user, req.Password);
+        user.PasswordHash = passwordHash;
+
+        try
+        {
+            await service.CreateUser(user);
+        }
+        catch (Exception ex)
+        {
+            AddError(ex.Message);
+            return new ProblemDetails(ValidationFailures);
+        }
+
+        return TypedResults.Created();
     }
 }
