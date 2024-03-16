@@ -38,6 +38,7 @@ availability <br> :clipboard: Trainings calendar <br>
 4. Install dependencies <br>`npm i`
 5. Go to ShooterLink.API/Source folder
 6. Run application <br>`dotnet run`
+7. Have fun!
 
 <br><br>
 
