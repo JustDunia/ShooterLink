@@ -1,18 +1,16 @@
 ﻿using FastEndpoints;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using ShooterLink.API.Auth.Register;
 using ShooterLink.API.Data.Entities;
-using ShooterLink.API.Features.Auth;
+using ShooterLink.API.EmailService;
 
-namespace ShooterLink.API.Auth.Register;
+namespace ShooterLink.API.Features.Auth.Register;
 
 public class RegisterEndpoint(
-    ITokenCreator tokenCreator,
     IAuthService service,
-    IPasswordHasher<User> passwordHasher)
-    : Endpoint<RegisterRequest,
-        Results<Created,
-            ProblemDetails>>
+    IPasswordHasher<User> passwordHasher,
+    IEmailSender emailSender)
+    : Endpoint<RegisterRequest>
 {
     public override void Configure()
     {
@@ -20,39 +18,56 @@ public class RegisterEndpoint(
         AllowAnonymous();
     }
 
-    public override async Task<Results<Created, ProblemDetails>> ExecuteAsync(RegisterRequest req,
+    public override async Task HandleAsync(RegisterRequest req,
         CancellationToken ct)
     {
-        var user = await service.GetUserByEmail(req.Email);
-
-        if (user is not null)
-        {
-            AddError("User with this email address already exists");
-            return new ProblemDetails(ValidationFailures);
-        }
-
-        user = new User()
-        {
-            FirstName = req.FirstName,
-            LastName = req.LastName,
-            Email = req.Email,
-            NormalizedEmail = req.Email.ToUpper(),
-            Created = DateTime.Now
-        };
-
-        var passwordHash = passwordHasher.HashPassword(user, req.Password);
-        user.PasswordHash = passwordHash;
-
         try
         {
-            await service.CreateUser(user);
+            var user = await service.GetUserByEmail(req.Email);
+
+            if (user is not null)
+            {
+                AddError("User with this email address already exists");
+            }
+            else
+            {
+                user = new User()
+                {
+                    FirstName = req.FirstName,
+                    LastName = req.LastName,
+                    Email = req.Email,
+                    NormalizedEmail = req.Email.ToUpper(),
+                    Created = DateTime.Now,
+                    Token = Guid.NewGuid().ToString()
+                };
+
+                var passwordHash = passwordHasher.HashPassword(user, req.Password);
+                user.PasswordHash = passwordHash;
+
+                await service.CreateUser(user);
+
+                try
+                {
+                    var confirmationUri = $"{BaseURL}api/auth/confirm-email?userId={user.Id}&token={user.Token}";
+                    await emailSender.SendEmailAsync(
+                        user.Email,
+                        "ShooterLink - email confirmation",
+                        $"Welcome to ShooterLink, please click the <a href=\"{confirmationUri}\">LINK</a> to confirm your email address",
+                        ct);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    // TODO exception logging
+                }
+            }
         }
         catch (Exception ex)
         {
             AddError(ex.Message);
-            return new ProblemDetails(ValidationFailures);
         }
 
-        return TypedResults.Created();
+        ThrowIfAnyErrors();
+        await Task.CompletedTask;
     }
 }

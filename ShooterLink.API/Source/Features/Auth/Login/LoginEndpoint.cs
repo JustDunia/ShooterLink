@@ -1,5 +1,4 @@
 ﻿using FastEndpoints;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using ShooterLink.API.Data.Entities;
 
@@ -9,10 +8,7 @@ public class LoginEndpoint(
     ITokenCreator tokenCreator,
     IAuthService service,
     IPasswordHasher<User> passwordHasher)
-    : Endpoint<LoginRequest,
-        Results<Ok<LoginResponse>,
-            NotFound,
-            ProblemDetails>>
+    : Endpoint<LoginRequest, LoginResponse>
 {
     public override void Configure()
     {
@@ -20,31 +16,40 @@ public class LoginEndpoint(
         AllowAnonymous();
     }
 
-    public override async Task<Results<Ok<LoginResponse>, NotFound, ProblemDetails>> ExecuteAsync(LoginRequest req,
-        CancellationToken ct)
+    public override async Task HandleAsync(LoginRequest req, CancellationToken ct)
     {
         var user = await service.GetUserByEmail(req.Email);
 
         if (user is null)
         {
-            return TypedResults.NotFound();
+            await SendNotFoundAsync(ct);
+            return;
+        }
+
+        if (!user.EmailConfirmed)
+        {
+            ThrowError("Email not confirmed.");
+        }
+
+        if (!user.Verified)
+        {
+            ThrowError("User not verified by administrator");
         }
 
         var passwordVerificationResult = passwordHasher.VerifyHashedPassword(user, user.PasswordHash, req.Password);
 
         if (passwordVerificationResult == PasswordVerificationResult.Failed)
         {
-            AddError("Invalid password");
-            return new ProblemDetails(ValidationFailures);
+            ThrowError("Invalid password");
         }
 
         var userRoles = user.Roles.Select(e => e.Name).ToList();
 
         var jwtToken = tokenCreator.CreateToken(req.Email, user.Id.ToString(), userRoles);
 
-        return TypedResults.Ok(new LoginResponse(
-            FirstName: "Your",
-            LastName: "Name",
+        await SendAsync(new LoginResponse(
+            FirstName: user.FirstName,
+            LastName: user.LastName,
             Token: jwtToken
         ));
     }

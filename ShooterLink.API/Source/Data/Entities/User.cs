@@ -14,7 +14,7 @@ public sealed class User : Entity
     public string? PhoneNumber { get; set; }
     public DateOnly? DateOfBirth { get; set; }
     public bool Verified { get; set; }
-    public string? Token { get; set; }
+    public string? Token { get; set; } // TODO rename to verificationToken
     public DateTime Created { get; set; }
 
     public ICollection<Role> Roles { get; set; } = [];
