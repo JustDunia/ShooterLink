@@ -13,8 +13,8 @@ public class ConfirmEmailEndpoint(IAuthService service)
 
     public override async Task HandleAsync(ConfirmEmailRequest req, CancellationToken ct)
     {
-        var userId = req.UserId;
-        var verificationToken = req.Token;
+        var message = "";
+        int status;
 
         try
         {
@@ -22,31 +22,41 @@ public class ConfirmEmailEndpoint(IAuthService service)
 
             if (user is null)
             {
-                await SendNotFoundAsync(ct);
-                return;
+                throw new Exception("User not found");
             }
 
             if (user.EmailConfirmed)
             {
-                ThrowError("Email already confirmed");
+                throw new Exception("Email already confirmed");
             }
 
             var isTokenCorrect = string.Equals(user.Token, req.Token);
             if (!isTokenCorrect)
             {
-                ThrowError("Invalid verification link");
+                throw new Exception("Invalid verification link");
             }
 
             await service.ConfirmEmail(user);
-            await SendOkAsync();
-
-            // TODO verification failed and success page
-            // var html = "<div style=\"height:100vh; padding-inline:auto; font-size:4rem\">Email confirmation failed</div>";
-            // await SendStringAsync(html, 400, "text/html");
+            message = "Email confirmed";
+            status = 200;
         }
         catch (Exception ex)
         {
-            ThrowError(ex.Message);
+            message = ex.Message;
+            status = 400;
+        }
+
+        try
+        {
+            var htmlTemplate = await File.ReadAllTextAsync("./Features/Auth/ConfirmEmail/HtmlMessage.html", ct);
+            var htmlMessage = htmlTemplate.Replace("{0}", message);
+            await SendStringAsync(htmlMessage, status, "text/html");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex); // TODO logging
+            var html = $"<div style=\"font-size:3rem\">{message}</div>";
+            await SendStringAsync(html, status, "text/html");
         }
     }
 }
