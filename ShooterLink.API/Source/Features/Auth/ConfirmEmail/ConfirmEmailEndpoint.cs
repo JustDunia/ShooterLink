@@ -1,4 +1,5 @@
 ﻿using FastEndpoints;
+using Serilog;
 
 namespace ShooterLink.API.Features.Auth.ConfirmEmail;
 
@@ -54,7 +55,7 @@ public class ConfirmEmailEndpoint(IAuthService service)
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex); // TODO logging
+            Log.Error(ex.ToString());
             var html = $"<div style=\"font-size:3rem\">{message}</div>";
             await SendStringAsync(html, status, "text/html");
         }

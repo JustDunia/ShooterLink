@@ -1,5 +1,6 @@
 ﻿using FastEndpoints;
 using Microsoft.AspNetCore.Identity;
+using Serilog;
 using ShooterLink.API.Auth.Register;
 using ShooterLink.API.Data.Entities;
 using ShooterLink.API.EmailService;
@@ -57,8 +58,7 @@ public class RegisterEndpoint(
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
-                    // TODO exception logging
+                    Log.Error(ex.ToString());
                 }
             }
         }
