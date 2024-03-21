@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
-import { CssBaseline, Container } from '@mui/material'
+import { CssBaseline } from '@mui/material'
 import { ThemeProvider } from '@mui/material/styles'
 import Register from './pages/Register'
 import AdminPanel from './pages/AdminPanel'
