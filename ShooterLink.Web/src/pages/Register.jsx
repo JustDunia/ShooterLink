@@ -9,18 +9,22 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { Link as RouterLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux'
+import { register } from '../redux/auth/operations'
 
 export default function Register() {
 	const dispatch = useDispatch()
-	
+
 	const handleSubmit = event => {
 		event.preventDefault()
 		const data = new FormData(event.currentTarget)
-		console.log({
+		const userData = {
+			firstName: data.get('firstName'),
+			lastName: data.get('lastName'),
 			email: data.get('email'),
 			password: data.get('password'),
-		})
+		}
+		dispatch(register(userData))
 	}
 
 	return (
