@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-axios.defaults.baseURL = import.meta.env.VITE_TARGET_URL
-
 const setAuthHeader = token => {
 	axios.defaults.headers.common.Authorization = `Bearer ${token}`
 }
@@ -13,7 +11,7 @@ const clearAuthHeader = () => {
 
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
 	try {
-		const response = await axios.post('auth/register', userData)
+		const response = await axios.post('/api/auth/register', userData)
 		return response.success ? true : thunkAPI.rejectWithValue(response.data.errors.generalErrors[0])
 	} catch (e) {
 		return thunkAPI.rejectWithValue(e.message)
@@ -22,7 +20,7 @@ export const register = createAsyncThunk('auth/register', async (userData, thunk
 
 export const logIn = createAsyncThunk('auth/login', async (userData, thunkAPI) => {
 	try {
-		const response = await axios.post('auth/login', userData)
+		const response = await axios.post('/api/auth/login', userData)
 		setAuthHeader(response.data.token)
 		return response.data
 	} catch (e) {
@@ -34,3 +32,23 @@ export const logOut = () => {
 	clearAuthHeader()
 	return { type: 'auth/logOut' }
 }
+
+// export const refreshToken = createAsyncThunk(
+//   'auth/refresh',
+//   async (_, thunkAPI) => {
+//     const state = thunkAPI.getState();
+//     const persistedToken = state.auth.token;
+
+//     if (persistedToken === null) {
+//       return thunkAPI.rejectWithValue('Unable to fetch user');
+//     }
+
+//     try {
+//       setAuthHeader(persistedToken);
+//       const response = await axios.get('/users/current');
+//       return response.data;
+//     } catch (e) {
+//       return thunkAPI.rejectWithValue(e.message);
+//     }
+//   }
+// );
