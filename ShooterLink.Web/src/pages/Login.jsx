@@ -10,9 +10,16 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import axios from 'axios'
 import { Link as RouterLink } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 export default function Login() {
-	const handleSubmit = async event => {
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm()
+
+	const submit = async event => {
 		event.preventDefault()
 		const data = new FormData(event.currentTarget)
 		const userData = {
@@ -38,31 +45,41 @@ export default function Login() {
 				<Typography component='h1' variant='h5'>
 					Sign In
 				</Typography>
-				<Box component='form' onSubmit={handleSubmit} sx={{ mt: 1 }}>
-					<TextField
-						margin='normal'
-						required
-						fullWidth
-						id='email'
-						label='Email'
-						name='email'
-						autoComplete='email'
-						autoFocus
-					/>
-					<TextField
-						margin='normal'
-						required
-						fullWidth
-						name='password'
-						label='Hasło'
-						type='password'
-						id='password'
-						autoComplete='current-password'
-					/>
-					{/* <FormControlLabel
-						control={<Checkbox value='remember' color='primary' />}
-						label='Zapamiętaj'
-					/> */}
+				<Box component='form' onSubmit={handleSubmit(submit)} noValidate sx={{ mt: 3 }}>
+					<Grid container spacing={2}>
+						<Grid item xs={12}>
+							<TextField
+								fullWidth
+								id='email'
+								label='Email Address'
+								name='email'
+								autoComplete='email'
+								{...register('email', {
+									required: true,
+									pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+								})}
+								error={errors.email ? true : false}
+								helperText={
+									errors.email &&
+									(errors.email.type === 'required'
+										? 'Email name is required'
+										: 'Provide valid email address')
+								}
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								fullWidth
+								name='password'
+								label='Password'
+								type='password'
+								id='password'
+								{...register('password', { required: 'Password is required' })}
+								error={errors.password ? true : false}
+								helperText={errors.password && errors.password.message}
+							/>
+						</Grid>
+					</Grid>
 					<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
 						Sign In
 					</Button>
