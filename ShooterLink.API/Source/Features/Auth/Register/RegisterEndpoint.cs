@@ -49,7 +49,8 @@ public class RegisterEndpoint(
 
                 try
                 {
-                    var confirmationUri = $"{BaseURL}api/auth/confirm-email?userId={user.Id}&token={user.Token}";
+                    var baseUrl = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+                    var confirmationUri = $"{baseUrl}/api/auth/confirm-email?userId={user.Id}&token={user.Token}";
                     await emailSender.SendEmailAsync(
                         user.Email,
                         "ShooterLink - email confirmation",

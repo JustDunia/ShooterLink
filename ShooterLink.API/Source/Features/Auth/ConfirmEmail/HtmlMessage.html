@@ -4,11 +4,13 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>ShooterLink</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 <style>
     body {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
         align-items: center;
         background-color: #202424;
         height: 80vh;
@@ -16,13 +18,32 @@
         font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
 
+    div {
+        margin-top: 48px;
+        text-align: center;
+    }
+
+    .material-symbols-outlined {
+        font-size: 40px;
+    }
+
     h1 {
-        font-size: 2rem;
+        font-size: 24px;
+        font-weight: normal;
+        color: white;
+    }
+    
+    a{
+        color: inherit;
     }
 </style>
 <body>
 <div>
-    <h1>{0}</h1>
+    <span class="material-symbols-outlined">
+        {icon}
+    </span>
+    <h1>{text}</h1>
+    <a href="{spaBaseUrl}/login">Sign in</a>
 </div>
 </body>
 </html>

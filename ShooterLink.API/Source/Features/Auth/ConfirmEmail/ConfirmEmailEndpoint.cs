@@ -50,7 +50,12 @@ public class ConfirmEmailEndpoint(IAuthService service)
         try
         {
             var htmlTemplate = await File.ReadAllTextAsync("./Features/Auth/ConfirmEmail/HtmlMessage.html", ct);
-            var htmlMessage = htmlTemplate.Replace("{0}", message);
+            var iconType = status == 200 ? "check_circle" : "cancel";
+            var spaUrl = Environment.GetEnvironmentVariable("SPA_URL");
+            var htmlMessage = htmlTemplate
+                .Replace("{text}", message)
+                .Replace("{icon}", iconType)
+                .Replace("{spaBaseUrl}", spaUrl);
             await SendStringAsync(htmlMessage, status, "text/html");
         }
         catch (Exception ex)
