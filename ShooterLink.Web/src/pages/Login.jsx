@@ -19,12 +19,11 @@ export default function Login() {
 		formState: { errors },
 	} = useForm()
 
-	const submit = async event => {
-		event.preventDefault()
-		const data = new FormData(event.currentTarget)
+	const submit = async (data, e) => {
+		e.preventDefault()
 		const userData = {
-			email: data.get('email'),
-			password: data.get('password'),
+			email: data.email,
+			password: data.password,
 		}
 		const response = await axios.post('/api/auth/login', userData)
 	}

@@ -1,6 +1,5 @@
 import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
@@ -9,12 +8,24 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { Link as RouterLink } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useForm } from 'react-hook-form'
 import { useRef } from 'react'
+import { register as signUp } from '../redux/auth/operations'
+import {
+	selectError,
+	selectIsRegisteredSuccessfully,
+	selectIsLoading,
+} from '../redux/auth/selectors'
+import RegisteredInfo from '../components/Auth/RegisteredInfo'
+import Alert from '@mui/material/Alert'
+import LoadingButton from '@mui/lab/LoadingButton'
 
 export default function Register() {
 	const dispatch = useDispatch()
+	const errorMessage = useSelector(selectError)
+	const isRegisteredSuccessfully = useSelector(selectIsRegisteredSuccessfully)
+	const isLoading = useSelector(selectIsLoading)
 
 	const {
 		register,
@@ -26,20 +37,27 @@ export default function Register() {
 	const password = useRef({})
 	password.current = watch('password', '')
 
-	const submit = event => {
-		event.preventDefault()
-		const data = new FormData(event.currentTarget)
+	const submit = (data, e) => {
+		e.preventDefault()
 		const userData = {
-			firstName: data.get('firstName'),
-			lastName: data.get('lastName'),
-			email: data.get('email'),
-			password: data.get('password'),
+			firstName: data.firstName,
+			lastName: data.lastName,
+			email: data.email,
+			password: data.password,
 		}
-		dispatch(register(userData))
+		dispatch(signUp(userData))
 	}
 
-	return (
+	return isRegisteredSuccessfully ? (
+		<RegisteredInfo />
+	) : (
 		<Container component='main' maxWidth='xs'>
+			{errorMessage &&
+				errorMessage.map((error, index) => (
+					<Alert severity='error' key={index}>
+						{error}
+					</Alert>
+				))}
 			<Box
 				sx={{
 					marginTop: 8,
@@ -48,7 +66,6 @@ export default function Register() {
 					alignItems: 'center',
 				}}
 			>
-				{errors.firstName && <span>This field is required</span>}
 				<Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
 					<LockOutlinedIcon />
 				</Avatar>
@@ -134,7 +151,7 @@ export default function Register() {
 							<TextField
 								fullWidth
 								name='repeatPassword'
-								label='Reapeat password'
+								label='Repeat password'
 								type='password'
 								id='repeatPassword'
 								{...register('repeatPassword', {
@@ -147,10 +164,16 @@ export default function Register() {
 							/>
 						</Grid>
 					</Grid>
-					<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+					<LoadingButton
+						type='submit'
+						fullWidth
+						variant='contained'
+						sx={{ mt: 3, mb: 2 }}
+						loading={isLoading}
+					>
 						Sign Up
-					</Button>
-					<Grid container justifyContent='flex-end'>
+					</LoadingButton>
+					<Grid container justifyContent='center'>
 						<Grid item>
 							<Link component={RouterLink} to='/login' variant='body2'>
 								Sign in

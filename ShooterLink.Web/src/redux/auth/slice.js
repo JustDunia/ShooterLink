@@ -28,6 +28,7 @@ const slice = createSlice({
 		isLoggedIn: false,
 		isLoading: false,
 		error: null,
+		isRegisterProcessSuccessful: false,
 	},
 	extraReducers: builder => {
 		builder
@@ -37,6 +38,7 @@ const slice = createSlice({
 				state.isLoggedIn = false
 				state.isLoading = false
 				state.error = null
+				state.isRegisterProcessSuccessful = true
 			})
 			.addCase(logIn.fulfilled, (state, action) => {
 				state.user = { firstName: action.payload.firstName, lastName: action.payload.lastName }

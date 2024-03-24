@@ -12,9 +12,9 @@ const clearAuthHeader = () => {
 export const register = createAsyncThunk('auth/register', async (userData, thunkAPI) => {
 	try {
 		const response = await axios.post('/api/auth/register', userData)
-		return response.success ? true : thunkAPI.rejectWithValue(response.data.errors.generalErrors[0])
+		return true
 	} catch (e) {
-		return thunkAPI.rejectWithValue(e.message)
+		return thunkAPI.rejectWithValue(e.response.data.errors.generalErrors || e.message)
 	}
 })
 
