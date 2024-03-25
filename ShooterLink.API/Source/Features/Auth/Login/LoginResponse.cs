@@ -3,4 +3,5 @@
 public record LoginResponse(
     string FirstName,
     string LastName,
-    string Token);
+    string Token,
+    List<string> Roles);

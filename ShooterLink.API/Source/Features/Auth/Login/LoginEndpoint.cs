@@ -50,7 +50,8 @@ public class LoginEndpoint(
         await SendAsync(new LoginResponse(
             FirstName: user.FirstName,
             LastName: user.LastName,
-            Token: jwtToken
+            Token: jwtToken,
+            Roles: userRoles
         ));
     }
 }

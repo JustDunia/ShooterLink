@@ -19,6 +19,7 @@ public class AuthService(DataContext dataContext) : IAuthService
     {
         return await dataContext
             .Users
+            .Include(e => e.Roles)
             .FirstOrDefaultAsync(
                 e => e.NormalizedEmail == email.ToUpper());
     }
