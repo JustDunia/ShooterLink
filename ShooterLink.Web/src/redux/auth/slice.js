@@ -23,7 +23,7 @@ const isRejectAction = action => {
 const slice = createSlice({
 	name: 'auth',
 	initialState: {
-		user: { firstName: null, lastName: null },
+		user: { firstName: null, lastName: null, roles: null },
 		token: null,
 		isLoggedIn: false,
 		isLoading: false,
@@ -41,7 +41,11 @@ const slice = createSlice({
 				state.isRegisterProcessSuccessful = true
 			})
 			.addCase(logIn.fulfilled, (state, action) => {
-				state.user = { firstName: action.payload.firstName, lastName: action.payload.lastName }
+				state.user = {
+					firstName: action.payload.firstName,
+					lastName: action.payload.lastName,
+					roles: action.payload.roles,
+				}
 				state.token = action.payload.token
 				state.isLoggedIn = true
 				state.isLoading = false

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Avatar from '@mui/material/Avatar'
-import Button from '@mui/material/Button'
+import LoadingButton from '@mui/lab/LoadingButton'
 import TextField from '@mui/material/TextField'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
@@ -8,24 +8,30 @@ import Box from '@mui/material/Box'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
-import axios from 'axios'
 import { Link as RouterLink } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectError, selectIsLoading } from '../redux/auth/selectors'
+import { logIn } from '../redux/auth/operations'
 
 export default function Login() {
+	const dispatch = useDispatch()
+	const errorMessage = useSelector(selectError)
+	const isLoading = useSelector(selectIsLoading)
+
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm()
 
-	const submit = async (data, e) => {
+	const submit = (data, e) => {
 		e.preventDefault()
 		const userData = {
 			email: data.email,
 			password: data.password,
 		}
-		const response = await axios.post('/api/auth/login', userData)
+		dispatch(logIn(userData))
 	}
 
 	return (
@@ -79,9 +85,15 @@ export default function Login() {
 							/>
 						</Grid>
 					</Grid>
-					<Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
+					<LoadingButton
+						type='submit'
+						fullWidth
+						variant='contained'
+						sx={{ mt: 3, mb: 2 }}
+						loading={isLoading}
+					>
 						Sign In
-					</Button>
+					</LoadingButton>
 					<Grid container sx={{ textAlign: 'center' }}>
 						<Grid item xs={12} sm={6}>
 							<Link href='#' variant='body2'>
