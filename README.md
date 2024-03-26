@@ -33,7 +33,7 @@ availability <br> :clipboard: Trainings calendar <br>
 ## How to run
 
 1. Clone repository
-2. Add your database settings to appsettings.json (create an empty database first)
+2. Add your settings to appsettings.json
 3. Go to ShooterLink.Web folder
 4. Install dependencies <br>`npm i`
 5. Go to ShooterLink.API/Source folder
