@@ -39,7 +39,7 @@ availability <br> :clipboard: Trainings calendar <br>
 5. Go to ShooterLink.API/Source folder
 6. Run application <br>`dotnet run`
 
-<br><br><br>
+<br><br>
 
 ### Attributions
 
